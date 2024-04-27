@@ -1,10 +1,10 @@
 # ALTCHA Astro Example
 
-This repository contains the working code for the ALTCHA's Astro tutorial.
+This repository contains the working code for the ALTCHA's Spam Filter tutorial.
 
 ## Tutorial
 
-Visit the [tutorial page](https://altcha.org/docs/tutorials/astro) for more information.
+Visit the [tutorial page](https://altcha.org/docs/tutorials/spam-filter) for more information.
 
 ## Start the server
 
