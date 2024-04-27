@@ -1,0 +1,121 @@
+---
+import { verifySolution } from "altcha-lib";
+
+// Configure your own API Key: https://altcha.org/docs/api/api_keys
+
+const ALTCHA_API_KEY = "ckey_...";
+const ALTCHA_API_SECRET = "csec_...";
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const altchaPayload = data.get("altcha")?.toString();
+
+   if (!altchaPayload) {
+      throw new Error("Altcha payload missing.");
+    }
+
+    if (await verifySolution(altchaPayload, ALTCHA_API_SECRET)) {
+       console.log('Verification successful', Object.fromEntries(data))
+      // TODO: process data
+    } else {
+       console.log('Verification failed')
+       // TODO: report failure to user
+     }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+---
+
+<script>
+	import('altcha');
+</script>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+
+		<main>
+			<form method="POST">
+				<div>
+					<h3>Contact Form</h3>
+				</div>
+	
+				<div class="field">
+					<label for="email">Email:</label>
+					<input type="email" name="email" id="email" required />
+				</div>
+	
+				<div class="field">
+					<label for="email">Message:</label>
+					<textarea name="message" rows="4" required></textarea>
+				</div>
+
+				<div>
+					<altcha-widget
+						challengeurl={`https://eu.altcha.org/api/v1/challenge?apiKey=${ALTCHA_API_KEY}`}
+					></altcha-widget>
+				</div>
+	
+				<div>
+					<button type="submit" class="button">Submit</button>
+				</div>
+			</form>
+		</main>
+
+	</body>
+</html>
+
+<style is:global>
+	html {
+		background-color: #efefef;
+		font-family: system-ui, sans-serif;
+	}
+
+	input, textarea {
+		font-size: inherit;
+		padding: 0.5rem;
+	}
+
+  main {
+    max-width: 32rem;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+
+  form {
+    background: white;
+    border: 1px solid gray;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .button {
+    font-size: 110%;
+    background: navy;
+    border: 0;
+    border-radius: 0.3rem;
+    color: white;
+    cursor: pointer;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+</style>
+
