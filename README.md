@@ -5,3 +5,4 @@ This repository contains the working code for the ALTCHA's tutorials. Visit the 
 
 - [Astro](/astro/)
 - [Spam Filter](/spam-filter/)
+- [Invisible Captcha](/invisible-captcha/)
